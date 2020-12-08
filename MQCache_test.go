@@ -56,6 +56,12 @@ func (s *mqCacheTestSuite) TestBasic() {
 	cache.Get("2")
 	s.Nil(cache.q[1].peek("1"))
 	s.NotNil(cache.q[1].peek("2"))
+	cache.Set("1", StringWithSize("1"))
+	rr, _ := cache.Get("1")
+	s.Equal("1", string(rr.(StringWithSize)))
+	cache.Set("1", StringWithSize("2"))
+	rr, _ = cache.Get("1")
+	s.Equal("2", string(rr.(StringWithSize)))
 }
 
 func BenchmarkMQCache_Set(b *testing.B) {
