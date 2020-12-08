@@ -94,7 +94,7 @@ func (c *MQCache) store(key string, value SizeComputer, now int64) {
 		if length > c.capacity {
 			c.evictMinimumSize(length - c.capacity)
 		}
-		c.q[idx].store(cacheEntry.key, cacheEntry.value, cacheEntry.hits, now)
+		c.q[idx].store(cacheEntry.key, value, cacheEntry.hits, now)
 		return
 	}
 
