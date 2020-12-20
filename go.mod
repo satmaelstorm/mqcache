@@ -1,4 +1,4 @@
-module mqcache
+module github.com/satmaelstorm/mqcache
 
 go 1.15
 
