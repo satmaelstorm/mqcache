@@ -1,4 +1,7 @@
 # MQCache Go implementation
+[![Go Report](https://goreportcard.com/badge/github.com/satmaelstorm/mqcache)](https://goreportcard.com/report/github.com/valyala/fasthttp) 
+[![GoDoc](https://godoc.org/github.com/satmaelstorm/mqcache?status.svg)](http://godoc.org/github.com/satmaeltorm/mqcache)
+
 Multi-Queue Cache implementation on Go
 
 [Original article](https://www.usenix.org/legacy/events/usenix01/full_papers/zhou/zhou.pdf)
