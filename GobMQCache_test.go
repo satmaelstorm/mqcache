@@ -19,7 +19,7 @@ func (s *gobMQCacheTestSuite) TestBasic() {
 	cache, err := NewGobMQCache(opts)
 	s.Nil(err)
 	s.NotNil(cache)
-	l, err := cache.Set("1", []int{1,2,3})
+	l, err := cache.Set("1", []int{1, 2, 3})
 	cacheLen, _ := cache.Len()
 	s.Nil(err)
 	s.Equal(int64(l), cacheLen)

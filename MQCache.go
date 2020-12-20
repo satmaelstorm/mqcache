@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-//MQCache - implementation of
+//MQCache - implementation of MQCache eviction algorithm
 //@see https://www.usenix.org/legacy/events/usenix01/full_papers/zhou/zhou.pdf
 type MQCache struct {
 	q         []*queue
@@ -19,6 +19,7 @@ type MQCache struct {
 	nilSize   int64
 }
 
+//NewMQCache create new instance of MQCache
 func NewMQCache(opts *Options) (*MQCache, error) {
 	if err := opts.Init(); err != nil {
 		return nil, err
@@ -128,6 +129,7 @@ func (c *MQCache) delete(key string) {
 	}
 }
 
+//Set store item in the cache
 func (c *MQCache) Set(key string, value SizeComputer) {
 	now := time.Now().UnixNano()
 	c.lock.Lock()
@@ -136,6 +138,7 @@ func (c *MQCache) Set(key string, value SizeComputer) {
 	c.adjust(now)
 }
 
+//Get load item from the cache
 func (c *MQCache) Get(key string) (SizeComputer, bool) {
 	now := time.Now().UnixNano()
 	c.lock.Lock()
@@ -152,6 +155,7 @@ func (c *MQCache) Get(key string) (SizeComputer, bool) {
 	return result, ok
 }
 
+//Delete item from the cache
 func (c *MQCache) Delete(key string) {
 	c.lock.Lock()
 	c.delete(key)
@@ -159,6 +163,7 @@ func (c *MQCache) Delete(key string) {
 	c.adjust(time.Now().UnixNano())
 }
 
+//Len return length of cache
 func (c *MQCache) Len() (totalLen int64, queuesLen []int64) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
@@ -169,10 +174,10 @@ func (c *MQCache) Len() (totalLen int64, queuesLen []int64) {
 	return totalLen, c.queuesLen
 }
 
+//GetSize return size of item in the cache
 func (c *MQCache) GetSize(s SizeComputer) int64 {
 	if nil == s {
 		return c.nilSize
 	}
 	return s.Size()
 }
-

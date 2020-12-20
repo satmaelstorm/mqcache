@@ -22,10 +22,9 @@ func (s *helpersMqCacheTestSuite) SetupSuite() {
 	opts2 := NewRecommendedOptions(100, 16, time.Second)
 	s.cacheBySize, _ = NewMQCache(opts2)
 	s.cacheByItems.Set("notValid", &SimpleSizeContainer{value: 123})
-	s.cacheByItems.Set("notValid2", IntSliceWithSize{1,2,3})
+	s.cacheByItems.Set("notValid2", IntSliceWithSize{1, 2, 3})
 	s.cacheBySize.Set("notValid", IntWithSize(64))
 }
-
 
 func (s *helpersMqCacheTestSuite) TestStringSimple() {
 	SaveString(s.cacheByItems, "1", "1")
@@ -64,7 +63,7 @@ func (s *helpersMqCacheTestSuite) TestStringBySize() {
 }
 
 func (s *helpersMqCacheTestSuite) TestBytesSimple() {
-	SaveBytes(s.cacheByItems, "1", []byte{1,2,3})
+	SaveBytes(s.cacheByItems, "1", []byte{1, 2, 3})
 	result, ok, err := LoadBytes(s.cacheByItems, "1")
 	s.Nil(err)
 	s.True(ok)
@@ -85,9 +84,8 @@ func (s *helpersMqCacheTestSuite) TestBytesSimple() {
 	s.Nil(result)
 }
 
-
 func (s *helpersMqCacheTestSuite) TestBytesBySize() {
-	SaveBytes(s.cacheBySize, "1", []byte{1,2,3})
+	SaveBytes(s.cacheBySize, "1", []byte{1, 2, 3})
 	result, ok, err := LoadBytes(s.cacheBySize, "1")
 	s.Nil(err)
 	s.True(ok)

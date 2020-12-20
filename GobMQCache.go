@@ -9,13 +9,13 @@ type item struct {
 	Val interface{}
 }
 
-//This implementation of MQCache encode data to gob
+//GobMQCache is the implementation of MQCache encode data to gob
 //and stores it like []byte. Easy way to build cache with limitation by memory
 type GobMQCache struct {
 	cache *MQCache
 }
 
-//Create new GobMQCache
+//NewGobMQCache create new GobMQCache
 func NewGobMQCache(opts *Options) (*GobMQCache, error) {
 	cache, err := NewMQCache(opts)
 	if err != nil {
@@ -25,7 +25,7 @@ func NewGobMQCache(opts *Options) (*GobMQCache, error) {
 	return &GobMQCache{cache: cache}, nil
 }
 
-//Store variable in the cache. Return error, if can't encode variable to gob
+//Set store variable in the cache. Return error, if can't encode variable to gob
 //Return number of stored bytes
 func (c *GobMQCache) Set(key string, value interface{}) (int, error) {
 	buf := new(bytes.Buffer)
@@ -39,7 +39,7 @@ func (c *GobMQCache) Set(key string, value interface{}) (int, error) {
 	return len(b), nil
 }
 
-//Load variable from cache. Return error, if can't decode gob
+//Get load variable from cache. Return error, if can't decode gob
 //Return value and sign of success
 func (c *GobMQCache) Get(key string) (interface{}, bool, error) {
 	if result, ok := c.cache.Get(key); ok {
@@ -63,8 +63,7 @@ func (c *GobMQCache) Delete(key string) {
 	c.cache.Delete(key)
 }
 
-//Length of cache in bytes
+//Len returns length of cache in bytes
 func (c *GobMQCache) Len() (totalLen int64, queuesLen []int64) {
 	return c.cache.Len()
 }
-

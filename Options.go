@@ -6,9 +6,10 @@ import (
 	"time"
 )
 
+//HitFunc - function for promotions item in cache lines by hits
 type HitFunc func(hits, maxNum int) int
 
-//Cache Parameters
+//Options - Cache Parameters
 type Options struct {
 	//Queues number
 	QueuesNum int
@@ -23,6 +24,7 @@ type Options struct {
 	NilSize int64
 }
 
+//NewRecommendedOptions - creates recommended by algorithm authors parameters
 func NewRecommendedOptions(capacity int, nilSize int64, lifeTimeInQueue time.Duration) *Options {
 	opts := &Options{
 		QueuesNum: 8,
@@ -34,6 +36,7 @@ func NewRecommendedOptions(capacity int, nilSize int64, lifeTimeInQueue time.Dur
 	return opts
 }
 
+//NewSimpleOptionsWithCapacityByItems - creates options for cache with size by items count
 func NewSimpleOptionsWithCapacityByItems(
 	capacity, queuesNum, qOutLen int,
 	lifeTimeInQueue time.Duration) *Options {
@@ -48,6 +51,7 @@ func NewSimpleOptionsWithCapacityByItems(
 	return opts
 }
 
+//NewSimpleOptionsWithCapacityByBytes - creates options for cache with size by bytes
 func NewSimpleOptionsWithCapacityByBytes(
 	capacity, queuesNum, qOutLen int,
 	lifeTimeInQueue time.Duration) *Options {
@@ -62,6 +66,7 @@ func NewSimpleOptionsWithCapacityByBytes(
 	return opts
 }
 
+//NewOptions - creates simple options
 func NewOptions(
 	capacity,
 	queuesNum,
@@ -81,6 +86,7 @@ func NewOptions(
 	return opts
 }
 
+//Init - validate options
 func (o *Options) Init() error {
 	if o.QOutLen < 1 {
 		return errors.New("length of out queue must be greater than 0")
@@ -97,6 +103,7 @@ func (o *Options) Init() error {
 	return nil
 }
 
+//RecommendedHitFunc - returns recommended by algorithm authors HitFunc
 func RecommendedHitFunc(hits, maxNum int) int {
 	if hits < 1 {
 		return 0

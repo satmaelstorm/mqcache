@@ -14,6 +14,7 @@ func loadSimpleSizeContainer(cache *MQCache, key string) (*SimpleSizeContainer, 
 	return container, true, nil
 }
 
+//SaveString - save string in the cache
 func SaveString(cache *MQCache, key, value string) {
 	if 1 == cache.nilSize {
 		cache.Set(key, NewSimpleSizeContainer(value))
@@ -22,6 +23,9 @@ func SaveString(cache *MQCache, key, value string) {
 	cache.Set(key, StringWithSize(value))
 }
 
+//LoadString - load string from the cache
+//If error occurred  - item not string, it returns error
+//If item does not present - return second argument as false
 func LoadString(cache *MQCache, key string) (string, bool, error) {
 	if 1 == cache.nilSize {
 		container, ok, err := loadSimpleSizeContainer(cache, key)
@@ -45,6 +49,7 @@ func LoadString(cache *MQCache, key string) (string, bool, error) {
 	return string(strWS), true, nil
 }
 
+//SaveBytes - save []bytes in the cache
 func SaveBytes(cache *MQCache, key string, value []byte) {
 	if 1 == cache.nilSize {
 		cache.Set(key, NewSimpleSizeContainer(value))
@@ -53,6 +58,9 @@ func SaveBytes(cache *MQCache, key string, value []byte) {
 	cache.Set(key, ByteSliceWithSize(value))
 }
 
+//LoadBytes - load []bytes from the cache
+//If error occurred  - item not []byte, it returns error
+//If item does not present - return second argument as false
 func LoadBytes(cache *MQCache, key string) ([]byte, bool, error) {
 	if 1 == cache.nilSize {
 		container, ok, err := loadSimpleSizeContainer(cache, key)
