@@ -104,15 +104,15 @@ func (o *Options) Init() error {
 }
 
 //RecommendedHitFunc - returns recommended by algorithm authors HitFunc
-func RecommendedHitFunc(hits, maxNum int) int {
+func RecommendedHitFunc(hits, queueNum int) int {
 	if hits < 1 {
 		return 0
 	}
 	r := int(math.Log(float64(hits)))
 	if r < 0 {
 		return 0
-	} else if r > maxNum {
-		return maxNum
+	} else if r >= queueNum {
+		return queueNum - 1
 	}
 	return r
 }
