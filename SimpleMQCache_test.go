@@ -2,6 +2,7 @@ package mqcache
 
 import (
 	"github.com/stretchr/testify/suite"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -69,4 +70,18 @@ func (s *simpleMqCacheTestSuite) TestContainer() {
 	c.SetValue("123")
 	r2 := c.GetValue()
 	s.Equal("123", r2.(string))
+}
+
+
+func (s *simpleMqCacheTestSuite) TestEvictions() {
+	opts := NewRecommendedOptions(3, 1, time.Millisecond)
+	cache, err := NewSimpleMQCache(opts)
+	s.Nil(err)
+	s.NotNil(cache)
+	for i := 0; i < 1000; i++ {
+		cache.Set(strconv.Itoa(i), i)
+	}
+	size, _ := cache.Len()
+	s.Equal(int64(3), size)
+	s.Equal(12, cache.LenQout())
 }

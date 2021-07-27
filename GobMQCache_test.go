@@ -2,6 +2,7 @@ package mqcache
 
 import (
 	"github.com/stretchr/testify/suite"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -37,4 +38,17 @@ func (s *gobMQCacheTestSuite) TestBasic() {
 	s.Equal(1, slice[0])
 	s.Equal(2, slice[1])
 	s.Equal(3, slice[2])
+}
+
+func (s *gobMQCacheTestSuite) TestEvictions() {
+	opts := NewRecommendedOptions(42, 1, time.Millisecond)
+	cache, err := NewGobMQCache(opts)
+	s.Nil(err)
+	s.NotNil(cache)
+	for i := 0; i < 1000; i++ {
+		_, _ = cache.Set(strconv.Itoa(i), i)
+	}
+	size, _ := cache.Len()
+	s.Equal(int64(42), size)
+	s.Equal(4 * 42, cache.LenQout())
 }

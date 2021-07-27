@@ -174,6 +174,13 @@ func (c *MQCache) Len() (totalLen int64, queuesLen []int64) {
 	return totalLen, c.queuesLen
 }
 
+//LenQout - return size of Qout
+func (c *MQCache) LenQout() int {
+	c.lock.Lock()
+	defer c.lock.Unlock()
+	return c.qOut.len()
+}
+
 //GetSize return size of item in the cache
 func (c *MQCache) GetSize(s SizeComputer) int64 {
 	if nil == s {

@@ -51,3 +51,7 @@ func (f *timeoutFifo) delete(key string) {
 		delete(f.values, e.Value.(*timeoutFifoNode).key)
 	}
 }
+
+func (f *timeoutFifo) len() int {
+	return f.queue.Len()
+}

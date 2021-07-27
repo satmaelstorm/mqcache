@@ -67,3 +67,8 @@ func (c *GobMQCache) Delete(key string) {
 func (c *GobMQCache) Len() (totalLen int64, queuesLen []int64) {
 	return c.cache.Len()
 }
+
+//LenQout - return size of Qout
+func (c *GobMQCache) LenQout() int {
+	return c.cache.LenQout()
+}

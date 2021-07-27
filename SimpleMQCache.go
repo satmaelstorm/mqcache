@@ -40,3 +40,8 @@ func (c *SimpleMQCache) Delete(key string) {
 func (c *SimpleMQCache) Len() (totalLen int64, queuesLen []int64) {
 	return c.cache.Len()
 }
+
+//LenQout - return size of Qout
+func (c *SimpleMQCache) LenQout() int {
+	return c.cache.LenQout()
+}
